@@ -4,12 +4,19 @@ import api from '../../services/api';
 import NavigationService from '~/services/navigation';
 
 import AuthActions from '../ducks/auth';
+import TeamsActions from '../ducks/teams';
 
 export function* init() {
-  const token = yield call([AsyncStorage, 'getItem'], '@Saas:token');
+  const token = yield call([AsyncStorage, 'getItem'], '@SaaS:token');
 
   if (token) {
     yield put(AuthActions.signInSuccess(token));
+  }
+
+  const team = yield call([AsyncStorage, 'getItem'], '@SaaS:team');
+
+  if (team) {
+    yield put(TeamsActions.selectTeam(JSON.parse(team)));
   }
 
   yield put(AuthActions.initCheckSuccess());
@@ -19,7 +26,7 @@ export function* signIn({ email, password }) {
   try {
     const response = yield call(api.post, 'sessions', { email, password });
 
-    yield call([AsyncStorage, 'setItem'], '@Saas:token', response.data.token);
+    yield call([AsyncStorage, 'setItem'], '@SaaS:token', response.data.token);
 
     yield put(AuthActions.signInSuccess(response.data.token));
     NavigationService.navigate('Main');
@@ -32,7 +39,7 @@ export function* signUp({ name, email, password }) {
   try {
     const response = yield call(api.post, 'users', { name, email, password });
 
-    yield call([AsyncStorage, 'setItem'], '@Saas:token', response.data.token);
+    yield call([AsyncStorage, 'setItem'], '@SaaS:token', response.data.token);
 
     yield put(AuthActions.signInSuccess(response.data.token));
     // yield put(push('/'));
