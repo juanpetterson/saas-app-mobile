@@ -1,5 +1,4 @@
 import { call, put } from 'redux-saga/effects';
-import { actions as toastrActions } from 'react-redux-toastr';
 import api from '../../services/api';
 
 import ProjectsActions from '../ducks/projects';
@@ -17,12 +16,6 @@ export function* createProject({ title }) {
     yield put(ProjectsActions.createProjectSuccess(response.data));
     yield put(ProjectsActions.closeProjectModal());
   } catch (err) {
-    yield put(
-      toastrActions.add({
-        type: 'error',
-        title: 'Erro na operação',
-        message: 'Houve um erro, tente novamente',
-      }),
-    );
+    yield put(console.log(err));
   }
 }
