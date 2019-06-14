@@ -24,7 +24,7 @@ class Members extends Component {
     const { members } = this.props;
 
     return (
-      <View style={styles.container} >
+      <View style={styles.container}>
         <Text style={styles.title}>MEMBERS</Text>
 
         <FlatList
@@ -32,16 +32,19 @@ class Members extends Component {
           data={members.data}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-            <View style={styles.memberContainer} >
+            <View style={styles.memberContainer}>
               <Text style={styles.memberName}>{item.user.name}</Text>
-              
-              <TouchableOpacity hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }} onPress={() => {}} >
+
+              <TouchableOpacity
+                hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
+                onPress={() => {}}
+              >
                 <Icon name="settings" size={20} color="#b0b0b0" />
               </TouchableOpacity>
             </View>
           )}
           ListFooterComponent={() => (
-            <TouchableOpacity style={styles.button} onPress={() => {}} >
+            <TouchableOpacity style={styles.button} onPress={() => {}}>
               <Text style={styles.buttonText}>Invite</Text>
             </TouchableOpacity>
           )}
@@ -53,10 +56,13 @@ class Members extends Component {
 
 const mapStateToProps = state => ({
   members: state.members,
-  activeTeam: state.teams.active,
+  activeTeam: state.teams.active
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(MembersActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Members);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Members);

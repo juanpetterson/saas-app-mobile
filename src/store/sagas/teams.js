@@ -6,7 +6,7 @@ import TeamsActions from '../ducks/teams';
 
 export function* getTeams() {
   const response = yield call(api.get, 'teams');
-  console.log('teste');
+
   yield put(TeamsActions.getTeamsSuccess(response.data));
 }
 
