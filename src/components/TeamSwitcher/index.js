@@ -6,8 +6,10 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TeamsActions from '~/store/ducks/teams';
+import AuthActions from '~/store/ducks/auth';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 
 import NewTeam from '~/components/NewTeam';
 
@@ -40,12 +42,12 @@ class TeamSwitcher extends Component {
     this.setState({ isModalOpen: true });
   };
 
-  toggleModalClose = () => {
+  toggleModalClosed = () => {
     this.setState({ isModalOpen: false });
   };
 
   render() {
-    const { teams, selectTeam } = this.props;
+    const { teams, selectTeam, signOut } = this.props;
     const { isModalOpen } = this.state;
 
     return (
@@ -70,7 +72,12 @@ class TeamSwitcher extends Component {
         <TouchableOpacity style={styles.newTeam} onPress={this.toggleModalOpen}>
           <Icon name="add" size={24} color="#999" />
         </TouchableOpacity>
-        <NewTeam visible={isModalOpen} onRequestClose={this.toggleModalClose} />
+        <View style={styles.logoutContainer}>
+          <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
+            <SimpleIcon name="logout" size={24} color="#e04848" />
+          </TouchableOpacity>
+        </View>
+        <NewTeam visible={isModalOpen} onRequestClose={this.toggleModalClosed} />
       </View>
     );
   }
@@ -80,7 +87,7 @@ const mapStateToProps = state => ({
   teams: state.teams,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(TeamsActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ ...TeamsActions, ...AuthActions }, dispatch);
 
 export default connect(
   mapStateToProps,

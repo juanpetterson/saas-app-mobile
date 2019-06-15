@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects';
+import { ToastActionsCreators } from 'react-native-redux-toast';
 import api from '../../services/api';
 
 import ProjectsActions from '../ducks/projects';
@@ -15,7 +16,8 @@ export function* createProject({ title }) {
 
     yield put(ProjectsActions.createProjectSuccess(response.data));
     yield put(ProjectsActions.closeProjectModal());
+    yield put(ToastActionsCreators.displayInfo('Project created'));
   } catch (err) {
-    yield put(console.log(err));
+    yield put(ToastActionsCreators.displayError('Error creating project'));
   }
 }

@@ -18,8 +18,7 @@ export default function* rootSaga() {
   return yield all([
     init(),
 
-    // fork(getPermissions),
-
+    takeLatest(AuthTypes.INIT_CHECK_SUCCESS, getPermissions),
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_OUT, signOut),
 
@@ -28,7 +27,7 @@ export default function* rootSaga() {
     takeLatest(TeamsTypes.SELECT_TEAM, setActiveTeam),
 
     takeLatest(TeamsTypes.SELECT_TEAM, getProjects),
-    // takeLatest(TeamsTypes.SELECT_TEAM, getPermissions),
+    takeLatest(TeamsTypes.SELECT_TEAM, getPermissions),
 
     takeLatest(ProjectsTypes.GET_PROJECTS_REQUEST, getProjects),
     takeLatest(ProjectsTypes.CREATE_PROJECT_REQUEST, createProject),

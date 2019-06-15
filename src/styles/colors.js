@@ -4,6 +4,8 @@ export default {
 
   primary: '#7289DA',
 
+  exit: '#a43d3d',
+
   white: '#FFF',
   lighter: '#B9BBBE',
   light: '#999',
